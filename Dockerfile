@@ -18,7 +18,7 @@ RUN apt-get update && \
 # 安装 Python 包
 RUN pip install --upgrade pip
 RUN pip install selenium webdriver-manager
-
+RUN pip install schedule
 # 复制 Python 脚本到容器内
 COPY get_test_eth.py /app/get_test_eth.py
 
