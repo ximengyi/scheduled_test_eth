@@ -1,5 +1,5 @@
 import time
-import os
+import schedule
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -42,8 +42,17 @@ def get_test_eth(wallet_address):
         driver.quit()
         print("Browser closed.")
 
-if __name__ == "__main__":
-    # 从环境变量中获取钱包地址
-    wallet_address = os.getenv("WALLET_ADDRESS", "0xxxx")  # 默认为您的钱包地址
-    print(f"Using wallet address: {wallet_address}")
+def job():
+    # 设置您的钱包地址
+    wallet_address = "0x92CaDCd5a69Bb327a56392B76f1D55A2C3a718d7"  # 请替换为您的钱包地址
     get_test_eth(wallet_address)
+
+# 设置定时任务为每天的 9:00 AM
+schedule.every().day.at("09:00").do(job)
+
+print("Scheduler started. Waiting for 9:00 AM...")
+
+# 持续运行，等待任务执行
+while True:
+    schedule.run_pending()  # 检查是否有任务到期并执行
+    time.sleep(60)  # 每 60 秒检查一次
